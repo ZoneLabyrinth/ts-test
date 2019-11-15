@@ -21,7 +21,7 @@
     "last 4 versions",
     "not ie < 9",
     "Android > 4.4",
-    "IOS >= 8" 
+    "IOS >= 8"
   ],
   "devDependencies": {
     "@babel/core": "^7.6.4",
