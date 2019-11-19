@@ -29,7 +29,9 @@ const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 //ts-loader
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+// const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+// awesome-typescript-loader
+const { CheckerPlugin } = require('awesome-typescript-loader');
 
 
 const postcssAspectRatioMini = require('postcss-aspect-ratio-mini');
@@ -70,7 +72,7 @@ const theme = getLessVariables(path.resolve(__dirname, '../src/assets/styles/the
 
 let webpackConfig = {
     entry: {
-        main: './src/main.ts'
+        main: './src/main.tsx'
     },
     output: {
         path: path.resolve(__dirname, '../dist'),
@@ -80,32 +82,18 @@ let webpackConfig = {
     module: {
         rules: [
             {
-                test: /\.js$/,
-                // include: path.resolve(__dirname, '../src'),
-                exclude: /node_modules/,
-                //多线程编译
-                use: [
-                    {
-                        loader: 'thread-loader',
-                        options: {
-                            workers: 3,
-                        }
-                    },
-                    'babel-loader?cacheDirectory=true',
-                    'eslint-loader'
-                ]
-            },
-            {
-                test: /\.(ts|tsx)$/,
+                test: /\.(js|jsx|ts|tsx)$/,
                 // include: path.resolve(__dirname, '../src'),
                 exclude: /node_modules/,
                 //多线程编译
                 use: [
                     //在thread-loader前
                     {
-                        loader: 'ts-loader',
+                        loader: 'awesome-typescript-loader',
                         options: {
-                            transpileOnly: true
+                            useBabel: true,
+                            babelCore: "@babel/core",
+                            useCache: true,
                         }
                     },
                     {
@@ -114,7 +102,6 @@ let webpackConfig = {
                             workers: 3,
                         }
                     },
-                    'babel-loader?cacheDirectory=true',
                     'eslint-loader'
                 ]
             },
@@ -200,30 +187,30 @@ let webpackConfig = {
                 test: /\.(gif|png|jpe?g|svg|blob)$/,
                 use: [
                     'file-loader',
-                    {
-                        loader: 'image-webpack-loader',
-                        options: {
-                            mozjpeg: {
-                                progressive: true,
-                                quality: 65
-                            },
-                            // optipng.enabled: false will disable optipng
-                            optipng: {
-                                enabled: false,
-                            },
-                            pngquant: {
-                                quality: '65-90',
-                                speed: 4
-                            },
-                            gifsicle: {
-                                interlaced: false,
-                            },
-                            // the webp option will enable WEBP
-                            webp: {
-                                quality: 75
-                            }
-                        }
-                    },
+                    // {
+                    //     loader: 'image-webpack-loader',
+                    //     options: {
+                    //         mozjpeg: {
+                    //             progressive: true,
+                    //             quality: 65
+                    //         },
+                    //         // optipng.enabled: false will disable optipng
+                    //         optipng: {
+                    //             enabled: false,
+                    //         },
+                    //         pngquant: {
+                    //             quality: '65-90',
+                    //             speed: 4
+                    //         },
+                    //         gifsicle: {
+                    //             interlaced: false,
+                    //         },
+                    //         // the webp option will enable WEBP
+                    //         webp: {
+                    //             quality: 75
+                    //         }
+                    //     }
+                    // },
                 ],
             },
             {
@@ -242,9 +229,8 @@ let webpackConfig = {
         }
     },
     plugins: [
-
         new CleanWebpackPlugin(),
-        new ForkTsCheckerWebpackPlugin({ checkSyntacticErrors: true }),
+        new CheckerPlugin(),
         new MiniCssExtractPlugin({
             filename: _modeflag ? 'styles/[name].[hash:5].css' : 'styles/[name].css',
             chunkFilename: _modeflag ? 'styles/[id].[hash:5].css' : 'styles/[id].css'
