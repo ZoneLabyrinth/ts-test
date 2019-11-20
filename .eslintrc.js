@@ -1,7 +1,8 @@
 module.exports = {
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
   "extends": [
     "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
     "airbnb"
   ],
   "env": {
@@ -15,16 +16,21 @@ module.exports = {
       }
     }
   },
+  "parserOptions": {
+    "project": "./tsconfig.json",
+  },
   "plugins": [
     // ...
+    "@typescript-eslint",
     "react-hooks"
   ],
   "rules": {
+    "@typescript-eslint/explicit-function-return-type": "off",
     "indent": ["error", 4],
     "no-tabs": "off",
     "jsx-a11y/click-events-have-key-events": 0,
     "jsx-a11y/no-static-element-interactions": 0,
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", "tsx"] }],
     "react/jsx-indent": [2, 4],
     "react/jsx-props-no-spreading": 0,
     "jsx-a11y/no-noninteractive-element-interactions": 0,
@@ -34,13 +40,13 @@ module.exports = {
     "react/no-array-index-key": 0,
     "react/jsx-indent-props": [2, 4],
     "no-extraneous-dependencies": 0,
-    "no-param-reassign": ["error", { "props": false }], 
+    "no-param-reassign": ["error", { "props": false }],
     "react/forbid-prop-types": 0,
     "no-nested-ternary": 0,
     "no-underscore-dangle": 0,
     "no-param-reassign": 1,
     "class-methods-use-this": 1,
-    "max-len" : ["error", {code : 300}] ,
+    "max-len": ["error", { code: 300 }],
     "react-hooks/rules-of-hooks": "error", // 检查 Hook 的规则
     "react-hooks/exhaustive-deps": 0, // 检查 effect 的依赖
     "linebreak-style": 0,

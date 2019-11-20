@@ -1,5 +1,5 @@
 {
-  "name": "org-healthy",
+  "name": "yingdanbao",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,7 @@
     "start": "cross-env NODE_ENV=development  webpack-dev-server --mode development --open --config ./config/webpack.base.js",
     "build": "cross-env NODE_ENV=production  webpack --mode production --config ./config/webpack.base.js",
     "dll": "webpack --config ./config/webpack.dll.js",
-    "eslint": "eslint ./src --fix",
+    "eslint": "eslint  ./src/** --fix",
     "watch": "webpack --watch",
     "dashboard": "webpack-dashboard webpack --mode development",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
